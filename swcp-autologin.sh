@@ -1,3 +1,5 @@
+#!/bin/bash
+
 TARGET_ESSID="sapienza"
 PORTAL_URL="https://wifi-cont1.uniroma1.it:8003"
 
