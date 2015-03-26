@@ -1,2 +1,3 @@
-# sapienza_wireless_cpal
-Sapienza wirless captive portal auto login
+# Sapienza wirless cpal
+
+Bash script for automatic login for sapienza wirless captive portal
