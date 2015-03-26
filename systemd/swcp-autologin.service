@@ -1,0 +1,7 @@
+[Unit]
+Description="Sapienza wireless captive portal auto login"
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/swcp-autologin.conf
+ExecStart=/usr/local/bin/swcp-autologin
