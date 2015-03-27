@@ -1,9 +1,10 @@
 [Unit]
 Description="Keep device logged in sapienza wireless"
+After=NetworkMangaer.service network.target
 
 [Timer]
 # Time between running each consecutive time
-OnBootSec=0
+OnBootSec=45sec
 OnUnitActiveSec=2min
 
 [Install]
