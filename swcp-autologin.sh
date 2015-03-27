@@ -4,6 +4,7 @@ TARGET_ESSID="sapienza"
 PORTAL_URL="https://wifi-cont1.uniroma1.it:8003"
 
 PROBE_TIMEOUT=5
+USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0"
 
 function log_debug {
     echo $1
@@ -30,12 +31,8 @@ if [ $http_code == 204 ]; then
 fi
 
 # actual request
-curl -s -o /dev/null \
---retry 10 \
--d "auth_user=$CPAL_USER" \
--d "auth_pass=$CPAL_PASS" \
--d "accept=Continue" \
-$PORTAL_URL
+echo "auth_user=$CPAL_USER&auth_pass=$CPAL_PASS&accept=Continue" | \
+curl -s -o /dev/null --user-agent "$USER_AGENT" --retry 10 -d "@-" "$PORTAL_URL"
 
 if [ $? -eq 0 ]; then
     log_debug "Login request successful sended"
