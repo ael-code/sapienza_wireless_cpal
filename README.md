@@ -2,6 +2,14 @@
 
 Bash script for automatic login to sapienza wirless captive portal
 
+## Dependencies
+
+| Dependency | Arch | Debian 7 / Ubuntu |
+|------------|------|----------|
+| GNU bash | bash | bash |
+| curl | curl | curl |
+| iwgetid | wireless_tools | wireless-tools |
+
 ## One shot usage
 
 ```bash
