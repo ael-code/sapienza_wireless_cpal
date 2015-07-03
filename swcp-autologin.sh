@@ -10,6 +10,8 @@ function log_debug {
     echo $1
 }
 
+set -e
+
 #control if user and password are being passed
 if [ -z "$CPAL_USER" -o -z "$CPAL_PASS" ]; then
     log_debug "'CPAL_USER' and 'CPAL_PASS' env variable must be set"
