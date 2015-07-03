@@ -16,7 +16,38 @@ Bash script for automatic login to sapienza wirless captive portal
 CPAL_USER="yourusername" CPAL_PASS="yourpassword" swcp-autologin.sh
 ```
 
-## Systemd integration
+## System wide installation
+
+You can install the script as a system command
+
+```
+sudo cp swcp-autologin.sh /usr/local/bin/swcp-autologin
+sudo chmod +x /usr/local/bin/swcp-autologin
+```
+
+## Run as daemon
+
+To run swcp-autologin as daemon you need to follow the [system wide installation procedure](#system-wide-installation) and
+then choose one of the integration method:
+ - [cron integration](#cron-integration)
+ - [systemd integration](#systemd-integration)
+
+
+
+### Cron integration
+
+Thanks to cron it's possible to automatically launch the script at specific time intervals
+
+edit your user crons with `crontab -e` and add the following line:
+```
+* * * * * env CPAL_USER="" CPAL_PASS="" PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" swcp-autologin >> /tmp/swcp-autologin.log 2>&1
+```
+remember to fill in the `CPAL_USER` and `CPAL_PASS` variables
+
+you will find the daemon log at `/tmp/swcp-autologin.log`
+
+
+### Systemd integration
 
 This installation method provide a configurable timed daemon that will keep you logged in.
 
@@ -30,12 +61,6 @@ CPAL_PASS="yourpassword"
 It's recommanded to make it readable only:
 
 ```sudo chmod 660 /etc/swcp-autologin.conf```
-
-##### Binary file
-
-Install binary file:
-
-```sudo cp swcp-autologin.sh /usr/local/bin/swcp-autologin```
 
 ##### Systemd files
 
