@@ -1,6 +1,6 @@
-# Sapienza wirless cpal
+# Sapienza wireless cpal
 
-Bash script for automatic login to sapienza wirless captive portal
+Bash script for automatic login to sapienza wireless captive portal
 
 ## Dependencies
 
