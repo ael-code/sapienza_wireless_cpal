@@ -40,10 +40,33 @@ if [ $? == 1 ]; then
 fi
 
 # actual request
-echo "auth_user=$CPAL_USER&auth_pass=$CPAL_PASS&accept=Continue" | \
-curl -s -o /dev/null --user-agent "$USER_AGENT" --retry 10 -d "@-" "$PORTAL_URL"
+resp_page=$(
+    echo "auth_user=$CPAL_USER&auth_pass=$CPAL_PASS&accept=Continue" | \
+    curl -s --user-agent "$USER_AGENT" --retry 10 -d "@-" "$PORTAL_URL"
+)
+resp_out=$?;
 
+# Check if curl exit with an error status code
+if [ $resp_out -ne 0 ]; then
+    log_debug "Failed to sent login request: $resp_out"
+    exit 1;
+fi
+
+# If the response page contains the word 'logout' it means that
+# we've successfully logged in
+echo $resp_page | grep -iq "logout"
 if [ $? -eq 0 ]; then
-    log_debug "Login request successful sended"
+    log_debug "Successfully logged in"
     exit 0;
 fi
+
+# If the response page contains 'invalid credentials' it means that
+# we had sended wrong username or password
+echo $resp_page | grep -iq "Invalid credentials"
+if [ $? -eq 0 ]; then
+    log_debug "Invalid credentials"
+    exit 3;
+fi
+
+log_debug "The login request has been sent but the response doesn't contain any meaningful data"
+exit 1
