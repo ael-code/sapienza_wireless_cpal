@@ -10,13 +10,20 @@ function log_debug {
     echo $1
 }
 
-set -e
+function is_internet_reachable {
+    local probe_timeout=$1
+    http_code=`curl --max-time $probe_timeout -s -o /dev/null -I -w "%{http_code}" http://clients3.google.com/generate_204`
+    if [ $http_code == 204 ]; then
+        return 1;
+    fi
+    return 0;
+}
 
 #control if user and password are being passed
 if [ -z "$CPAL_USER" -o -z "$CPAL_PASS" ]; then
     log_debug "'CPAL_USER' and 'CPAL_PASS' env variable must be set"
     exit 1
-fi 
+fi
 
 #controls if you are connected to the right AP
 essid=`iwgetid -r`
@@ -26,8 +33,8 @@ if [ "$essid" != "$TARGET_ESSID" ]; then
 fi
 
 #controls if you are already logged
-http_code=`curl --max-time $PROBE_TIMEOUT -s -o /dev/null -I -w "%{http_code}" http://clients3.google.com/generate_204`
-if [ $http_code == 204 ]; then
+is_internet_reachable $PROBE_TIMEOUT
+if [ $? == 1 ]; then
     log_debug "Already logged in"
     exit 0;
 fi
