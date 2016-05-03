@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TARGET_ESSID="sapienza"
-PORTAL_URL="https://wifi-cont1.uniroma1.it:8003"
+PORTAL_URL="https://wifi-cont1.uniroma1.it:8003/index.php?zone=wifi_sapienza"
 
 PROBE_TIMEOUT=40
 USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0"
